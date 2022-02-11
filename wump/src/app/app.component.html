@@ -36,11 +36,11 @@
     Warnings:
     <br>
     When you are one room away from a wumpus or hazard, the computer says:
-    Wumpus: 'I smell a wumpus'
+    Wumpus: 'You smell a horrid stench...'
     <br>
-    Bat: 'Bats nearby'
+    Bat: 'There are bats nearby...'
     <br>
-    Pit: 'I feel a draft'
+    Pit: 'You feel a draft...'
   </p>
 
 </div>
@@ -52,7 +52,7 @@
 </div>
 <br>
 <div class="body">
-  <input type="String" [(ngModel)]='answer'>
+  <input type="String" id = textbox [(ngModel)] = 'answer'>
   <form>
           <input type = "button" #ans (click) = "parseAnswer()" value = "Submit">
   </form>
