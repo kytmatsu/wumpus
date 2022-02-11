@@ -144,6 +144,7 @@ export class AppComponent {
        this.element.textContent = "You are in the Wumpus Room!!!\r\n";
       }
       this.playerAlive = false;
+      this.showChoices();
     }
     else if (this.currentRoom == this.batRoom1 || this.currentRoom == this.batRoom2)
     {
