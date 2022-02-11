@@ -1,0 +1,44 @@
+div.title {
+  height: 7em;
+  display: flex;
+  background-color: #cfc ;
+  align-items: center;
+  justify-content: center;
+  padding: 10px ;
+  border: 1px solid green ;
+  font-size: 40px;
+  font-family: "Times New Roman", Times, serif;}
+
+  div.body1 {
+    height: 4em;
+    display: flex;
+    background-color: #ffa ;
+    text-align: center;
+    block-size: fit-content;
+    padding: 10px ;
+    border: 1px solid black ;
+    font-size: 18px;
+    font-family: "Times New Roman", Times, serif;
+    justify-content: center;
+    white-space: pre }
+
+    div.body {
+      height: 2em;
+      display: block;
+      background-color: #cac ;
+      text-align: center;
+      padding: 10px ;
+      border: 1px solid purple ;
+      font-size: 20px;
+      font-family: "Times New Roman", Times, serif;
+      justify-content: center }
+
+    .small {
+      font-size: 12px;
+      font-family: "Times New Roman", Times, serif;
+        }
+      div.title h1{
+      font-size: 40px;
+      position: absolute;
+      top: -2%;
+    }

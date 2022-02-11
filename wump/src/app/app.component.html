@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<body>
+<div class="title">
+  <h1>Hunt the Wumpus!</h1>
+    <p class ="small">
+    Welcome to 'Hunt the Wumpus'!
+    <br>
+    The wumpus lives in a cave of 20 rooms. Each room has 3 tunnels leading to
+    other rooms.
+    <br>
+    Hazards:
+    <br>
+    Bottomless pits - two rooms have bottomless pits in them. If you go there, you
+    fall into the pit (& lose!)
+    <br>
+    Super bats - two other rooms have super bats.  If you go there, a bat grabs you
+    and takes you to some other room at random. (Which may be troublesome). Once the
+    bat has moved you, that bat moves to another random location on the map.
+    <br>
+    Wumpus:
+    <br>
+    The wumpus is not bothered by hazards (he has sucker feet and is too big for a
+    bat to lift).  Usually he is asleep.  Two things wake him up: you shooting an
+    arrow or you entering his room. If the wumpus wakes he moves (p=.75) one room or
+    stays still (p=.25). After that, if he is where you are, he eats you up and you lose!
+    <br>
+    You:
+    <br>
+    Each turn you may move, save or shoot an arrow using the commands move, save, & shoot.
+    Moving: you can move one room (thru one tunnel).
+    Arrows: you have 3 arrows. You lose when you run out. You aim by telling the
+    computer the rooms you want the arrow to go to.  If the arrow can't go that way
+    (if no tunnel), the arrow will not fire.
+    <br>
+    Warnings:
+    <br>
+    When you are one room away from a wumpus or hazard, the computer says:
+    Wumpus: 'I smell a wumpus'
+    <br>
+    Bat: 'Bats nearby'
+    <br>
+    Pit: 'I feel a draft'
+  </p>
+
+</div>
+<br>
+<div class="body1">
+  <div id="print-wump">
+    Wumpus Game!!
+  </div>
+</div>
+<br>
+<div class="body">
+  <input type="String" [(ngModel)]='answer'>
+  <form>
+          <input type = "button" #ans (click) = "parseAnswer()" value = "Submit">
+  </form>
+</div>
+</body>
+</html>
