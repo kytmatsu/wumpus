@@ -52,10 +52,8 @@
 </div>
 <br>
 <div class="body">
-  <input type="String" id = textbox [(ngModel)] = 'answer'>
-  <form>
-          <input type = "button" #ans (click) = "parseAnswer()" value = "Submit">
-  </form>
+  <input type ="text" id = "textbox"  [(ngModel)]= "answer">
+  <input type = "button" #ans (click) = "parseAnswer()" value = "Submit">
 </div>
 </body>
 </html>

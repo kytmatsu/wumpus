@@ -7,6 +7,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   @ViewChild('ans') butClick!: ElementRef;
 
   constructor(private renderer:Renderer2) { }
@@ -16,12 +17,19 @@ export class AppComponent {
     this.element = document.getElementById('print-wump');
     this.textbox = document.getElementById('textbox');
     this.inspectCurrentRoom();
+    this.unlisten2 = this.renderer.listen(this.textbox, 'keyup', (event)=>{
+      if (event.keyCode == 13)
+       {
+      this.butClick.nativeElement.click();
+      }});
     //this.showChoices();
   }
 
   unlisten!: () => void;
+  unlisten2!: () => void;
   waitForPressResolve: any;
 
+  wait = false;
   waitTime = false;
   playerAlive = true;
   wumpusAlive = true;
@@ -82,10 +90,11 @@ export class AppComponent {
 
  async parseAnswer()
   {
-    //alert(myAns);
+    alert(this.answer);
+    debugger;
     var myAnswer = this.answer.replace(/[\s]/g,'');
     this.myAns = myAnswer;
-    if(this.playerAlive == true){
+    if(this.playerAlive == true && this.wait == false){
     switch(myAnswer)
               {
                   case 'q':
@@ -98,30 +107,27 @@ export class AppComponent {
                       this.performAction(myAnswer);
                       break;
                   default:
-                    if(this.waitTime == true){
                       if(this.element){
                       this.element.textContent = "Invalid choice. Please try again.\r\n";
                       }
                       this.inspectCurrentRoom();
                       //this.showChoices();
-                    }
                       break;
               }
             }
             
     this.textbox.focus();
-    this.answer = '';
+    //this.answ.nativeElement.value = ' ';
+    //this.answer = '';
     
   }
 
   async performAction(ans:String) {
     //var myAns = this.convertStringToNumber(this.answer);
-    debugger;
     switch(ans)
     {
         case 'q':
           var temp = 0;
-          this.waitTime = false;
             if(this.element){
               this.element.textContent = "Which room?\r\n";
               for (var j = 0; j < 3; j++)
@@ -131,8 +137,9 @@ export class AppComponent {
             }
             while(temp == 0){
             //this.waitInput();
+            this.wait = true;
             this.unlisten = this.renderer.listen(this.butClick.nativeElement, 'click', (event)=>{this.waitResolve()});
-              await this.waitForPress();
+              await this.waitForPress(); 
             var newAns = this.convertStringToNumber(this.myAns.replace(/[^\/\d]/g,''));
             alert("newAns " + newAns);
                 if (this.isValidMove(newAns))
@@ -156,12 +163,13 @@ export class AppComponent {
                   }
                 }
               }
+              debugger;
+              this.wait = false;
               this.unlisten();
             break;
         case 'w':
             if(this.numArrows > 0){
               var temp = 0;
-              this.waitTime = false;
               if(this.element){
                 this.element.textContent = "Which room?\r\n";
                 for (var j = 0; j < 3; j++)
@@ -170,6 +178,7 @@ export class AppComponent {
                 }
             }
               while(temp == 0){
+                this.wait = true;
               //this.waitInput();
               this.unlisten = this.renderer.listen(this.butClick.nativeElement, 'click', (event)=>{this.waitResolve()});
                 await this.waitForPress();
@@ -204,7 +213,7 @@ export class AppComponent {
                         }
                         if(this.numArrows <= 0 && this.wumpusAlive == true){
                           if(this.element){
-                            this.element.textContent = "You do not have any arrows left!\r\n" + "You have no choice but to accept your fate.\r\n";
+                            this.element.textContent += "\r\nYou do not have any arrows left!\r\n" + "You have no choice but to accept your fate.\r\n";
                             this.playerAlive = false;
                             this.showChoices();
                           }
@@ -226,6 +235,7 @@ export class AppComponent {
             } 
             //this.unlisten();
           }
+          this.wait = false;
             break;
         case 'e':
             if(this.element){
@@ -238,7 +248,6 @@ export class AppComponent {
           if(this.element){
             this.element.textContent = "You cannot do that. You can move, shoot, or quit."
           }
-          this.waitTime = false;
             break;
           }
 }
@@ -434,7 +443,6 @@ placeStuff(){
 }
 
 async playAgain(){
-  debugger;
   if(this.element){
     this.element.textContent +=  "Would you like to play again? \r\n'Y?' \r\n";
   }
@@ -472,6 +480,7 @@ async playAgain(){
 
 ngOnDestroy() {
   this.unlisten();
+  this.unlisten2();
   }
 
 }
