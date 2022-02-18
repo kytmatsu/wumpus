@@ -90,21 +90,31 @@ export class AppComponent {
 
  async parseAnswer()
   {
-    //alert(this.answer);
     debugger;
-    var myAnswer = this.answer.replace(/[\s]/g,'');
+    var myAnswer = this.answer.replace(/[\s]/g,'').toLowerCase();
+    var stringAns = myAnswer.replace(/[\d]/g,'');
+    var numAns = myAnswer.replace(/[\a-z]/g,'');
+    //alert(myAnswer);
+    //alert(stringAns);
+    //alert(numAns);
     this.myAns = myAnswer;
     if(this.playerAlive == true && this.wait == false){
-    switch(myAnswer)
+    switch(stringAns)
               {
                   case 'q':
-                      this.performAction(myAnswer);
+                      this.performAction(stringAns);
                       break;
                   case 'w':
-                      this.performAction(myAnswer);
+                      this.performAction(stringAns);
                       break;
                   case 'e':
-                      this.performAction(myAnswer);
+                      this.performAction(stringAns);
+                      break;
+                  case 'move':
+                    this.performActionLong(stringAns, numAns);
+                    break;
+                  case 'shoot':
+                      this.performActionLong(stringAns, numAns);
                       break;
                   default:
                       if(this.element){
@@ -252,6 +262,98 @@ export class AppComponent {
           }
 }
 
+//Handles calls including words move and a number or shoot and a number
+//Needs a string in the form of an answer command and a number to action to
+performActionLong(ans:String, num:String) {
+  //var myAns = this.convertStringToNumber(this.answer);
+  switch(ans)
+  {
+      case 'move':
+          //this.waitInput();
+          var newAns = this.convertStringToNumber(num.replace(/[^\/\d]/g,''));
+          //alert("newAns " + newAns);
+              if (this.isValidMove(newAns))
+              {
+                  this.currentRoom = this.move(newAns);
+                  if(this.element){
+                    this.element.textContent = "";
+                  }
+                  this.inspectCurrentRoom();
+              }
+              else
+              {
+                if(this.element){
+                  this.element.textContent = "You cannot move there.\r\n";
+                  this.showChoices();
+                  this.inspectCurrentRoom();
+                }
+              }
+            debugger;
+          break;
+      case 'shoot':
+          if(this.numArrows > 0){
+            var newAns = this.convertStringToNumber(num.replace(/[^\/\d]/g,''));
+                  if (this.isValidMove(newAns))
+                  {
+                      this.numArrows -= 1;
+                      if(newAns == this.wumpusRoom){
+                        if(this.element){
+                          this.element.textContent = "You hear a noise: 'GRAWR' ... Splat!\r\n";
+                        }
+                          this.wumpusAlive = false;
+                          this.showChoices();
+                      }
+                      else
+                      {
+                        if(this.element){
+                          this.element.textContent = "Miss!\r\n"
+                          this.element.textContent += "Arrows Left: " + this.numArrows;
+                          //this.element.textContent += this.numArrows;
+                        }
+                        this.startleWumpus(this.wumpusRoom);
+                          if(this.wumpusRoom == this.currentRoom){
+                            if(this.element){
+                              this.element.textContent = "The wumpus attacked you! You've been killed.\r\n";
+                            }
+                              this.playerAlive = false;
+                              this.showChoices();
+                          }
+
+                      }
+                      if(this.numArrows <= 0 && this.wumpusAlive == true){
+                        if(this.element){
+                          this.element.textContent += "\r\nYou do not have any arrows left!\r\n" + "You have no choice but to accept your fate.\r\n";
+                          this.playerAlive = false;
+                          this.showChoices();
+                        }
+                      }
+                      this.inspectCurrentRoom();
+                  }
+                  else
+                  {
+                    if(this.element){
+                      this.element.textContent = "You cannot shoot there.\r\n";
+                      this.showChoices();
+                      this.inspectCurrentRoom();
+                    }
+                  }
+          }
+          break;
+      case 'e':
+          if(this.element){
+          this.element.textContent = "Quitting the current game.\r\n";
+          }
+          this.playerAlive = false;
+          this.showChoices();
+          break;
+      default:
+        if(this.element){
+          this.element.textContent = "You cannot do that. You can move, shoot, or quit."
+        }
+          break;
+        }
+}
+
   showChoices(){
     if(this.playerAlive && this.wumpusAlive && this.numArrows > 0){
       if(this.element){
@@ -259,6 +361,7 @@ export class AppComponent {
         this.element.textContent += "q) Move\r\n";
         this.element.textContent += "w) Shoot\r\n";
         this.element.textContent += "e) Quit\r\n";
+        this.element.textContent += "Move [room number] and Shoot [room number] work as well\r\n";
       }
     }
     else if(this.wumpusAlive == false){
