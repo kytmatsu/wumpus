@@ -373,6 +373,7 @@ performActionLong(ans:String, num:String) {
   }
 
    inspectCurrentRoom() {
+     debugger;
     if (this.currentRoom == this.wumpusRoom)
     {
       if(this.element){
@@ -419,7 +420,7 @@ performActionLong(ans:String, num:String) {
             }
             this.validNewBatRoom = false;
         }
-        this.unlisten();
+        //this.unlisten();
         this.inspectCurrentRoom();
     }
     else if(this.currentRoom == this.pitRoom1 || this.currentRoom == this.pitRoom2)
@@ -516,7 +517,7 @@ placeWumpus() {
 placeBats(){
   var validRoom = false;
   while(!validRoom){
-    this.batRoom1 = this.rand(1,20) % 20;
+    this.batRoom1 = 1;//this.rand(1,20) % 20;
     if(this.batRoom1 != this.wumpusRoom){
       validRoom = true;
     }
