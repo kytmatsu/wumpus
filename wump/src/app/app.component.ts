@@ -517,7 +517,7 @@ placeWumpus() {
 placeBats(){
   var validRoom = false;
   while(!validRoom){
-    this.batRoom1 = 1;//this.rand(1,20) % 20;
+    this.batRoom1 = this.rand(1,20) % 20;
     if(this.batRoom1 != this.wumpusRoom){
       validRoom = true;
     }
