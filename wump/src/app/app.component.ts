@@ -90,7 +90,7 @@ export class AppComponent {
 
  async parseAnswer()
   {
-    alert(this.answer);
+    //alert(this.answer);
     debugger;
     var myAnswer = this.answer.replace(/[\s]/g,'');
     this.myAns = myAnswer;
@@ -115,11 +115,11 @@ export class AppComponent {
                       break;
               }
             }
-            
+
     this.textbox.focus();
     //this.answ.nativeElement.value = ' ';
     //this.answer = '';
-    
+
   }
 
   async performAction(ans:String) {
@@ -139,9 +139,9 @@ export class AppComponent {
             //this.waitInput();
             this.wait = true;
             this.unlisten = this.renderer.listen(this.butClick.nativeElement, 'click', (event)=>{this.waitResolve()});
-              await this.waitForPress(); 
+              await this.waitForPress();
             var newAns = this.convertStringToNumber(this.myAns.replace(/[^\/\d]/g,''));
-            alert("newAns " + newAns);
+            //alert("newAns " + newAns);
                 if (this.isValidMove(newAns))
                 {
                     this.currentRoom = this.move(newAns);
@@ -182,7 +182,7 @@ export class AppComponent {
               //this.waitInput();
               this.unlisten = this.renderer.listen(this.butClick.nativeElement, 'click', (event)=>{this.waitResolve()});
                 await this.waitForPress();
-              var newAns = this.convertStringToNumber(this.myAns.replace(/[^\/\d]/g,''));  
+              var newAns = this.convertStringToNumber(this.myAns.replace(/[^\/\d]/g,''));
                     if (this.isValidMove(newAns))
                     {
                       temp++;
@@ -232,7 +232,7 @@ export class AppComponent {
                       }
                     }
                     this.unlisten();
-            } 
+            }
             //this.unlisten();
           }
           this.wait = false;
@@ -313,7 +313,7 @@ export class AppComponent {
                     this.validNewBatRoom = true;
             }
             this.validNewBatRoom = false;
-        } 
+        }
         else {
             while(!this.validNewBatRoom){
                 this.batRoom2 = this.rand(1,19) % 19;
@@ -382,7 +382,7 @@ export class AppComponent {
               await this.waitForPress();
     }*/
 
-    
+
 
 startleWumpus(newRoom: number){
     var random = this.rand(1,5) % 4;
@@ -390,7 +390,7 @@ startleWumpus(newRoom: number){
       this.wumpusRoom = this.rooms[newRoom][random];
       if(this.element){
         this.element.textContent += "\r\nYou hear footsteps! The wumpus is moving!"
-      } 
+      }
     }
 }
 
@@ -430,8 +430,8 @@ placeBats(){
     this.batRoom2 = this.rand(1,20) % 20;
     if(this.batRoom2 != this.wumpusRoom && this.batRoom2 != this.batRoom1){
       validRoom = true;
-    } 
-    
+    }
+
   }
 }
 
@@ -456,10 +456,10 @@ async playAgain(){
       }
         //this.placeStuff();
         //this.inspectCurrentRoom();
-        
+
         window.location.reload();
-    } 
-    else 
+    }
+    else
     {
       if(this.element){
         this.element.textContent =  "Thanks for playing!!";
