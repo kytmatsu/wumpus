@@ -90,7 +90,7 @@ export class AppComponent {
 
  async parseAnswer()
   {
-    debugger;
+
     var myAnswer = this.answer.replace(/[\s]/g,'').toLowerCase();
     var stringAns = myAnswer.replace(/[\d]/g,'');
     var numAns = myAnswer.replace(/[\a-z]/g,'');
@@ -146,6 +146,7 @@ export class AppComponent {
               }
             }
             while(temp == 0){
+              debugger;
             //this.waitInput();
             this.wait = true;
             this.unlisten = this.renderer.listen(this.butClick.nativeElement, 'click', (event)=>{this.waitResolve()});
@@ -172,6 +173,7 @@ export class AppComponent {
                     }
                   }
                 }
+                this.unlisten();
               }
               debugger;
               this.wait = false;
@@ -188,6 +190,7 @@ export class AppComponent {
                 }
             }
               while(temp == 0){
+                debugger;
                 this.wait = true;
               //this.waitInput();
               this.unlisten = this.renderer.listen(this.butClick.nativeElement, 'click', (event)=>{this.waitResolve()});
@@ -284,7 +287,6 @@ performActionLong(ans:String, num:String) {
               {
                 if(this.element){
                   this.element.textContent = "You cannot move there.\r\n";
-                  this.showChoices();
                   this.inspectCurrentRoom();
                 }
               }
@@ -333,18 +335,10 @@ performActionLong(ans:String, num:String) {
                   {
                     if(this.element){
                       this.element.textContent = "You cannot shoot there.\r\n";
-                      this.showChoices();
                       this.inspectCurrentRoom();
                     }
                   }
           }
-          break;
-      case 'e':
-          if(this.element){
-          this.element.textContent = "Quitting the current game.\r\n";
-          }
-          this.playerAlive = false;
-          this.showChoices();
           break;
       default:
         if(this.element){
